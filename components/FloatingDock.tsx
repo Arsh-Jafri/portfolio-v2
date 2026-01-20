@@ -12,9 +12,30 @@ export default function FloatingDock() {
   const [activeSection, setActiveSection] = useState('hero')
   const [isScrolling, setIsScrolling] = useState(false)
   const [isFooterVisible, setIsFooterVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const mediaQuery = window.matchMedia('(max-width: 639px)')
+
+    const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(event.matches)
+    }
+
+    // Set initial value
+    handleChange(mediaQuery)
+
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleChange as (event: MediaQueryListEvent) => void)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange as (event: MediaQueryListEvent) => void)
+    }
   }, [])
 
   useEffect(() => {
@@ -78,15 +99,20 @@ export default function FloatingDock() {
     return null
   }
 
+  const hideOnMobileHero = isMobile && activeSection === 'hero' && !isFooterVisible
+
   return (
     <div
       className={cn(
-        "fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
-        isFooterVisible ? "translate-y-[200px] pointer-events-none" : "translate-y-0"
+        "fixed bottom-1 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
+        isFooterVisible ? "translate-y-[200px] pointer-events-none" : "translate-y-0",
+        hideOnMobileHero
+          ? "opacity-0 translate-y-4 pointer-events-none"
+          : "opacity-100 translate-y-0"
       )}
     >
       <Dock 
-        className="pointer-events-auto bg-[#0B0C10]/20 backdrop-blur-xl border-[#30363D]/50 shadow-2xl"
+        className="pointer-events-auto bg-[#0B0C10]/20 backdrop-blur-xl border-[#30363D]/50 shadow-none sm:shadow-2xl"
         iconSize={56}
         iconMagnification={80}
         iconDistance={180}

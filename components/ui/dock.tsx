@@ -152,6 +152,7 @@ const DockIcon = ({
     <motion.div
       ref={ref}
       style={{ width: scaleSize, height: scaleSize, padding }}
+      whileTap={{ scale: 1.08 }}
       className={cn(
         "flex aspect-square cursor-pointer items-center justify-center rounded-full transition-all",
         isActive ? "bg-accent pill-button" : "bg-transparent hover:bg-white/10",
