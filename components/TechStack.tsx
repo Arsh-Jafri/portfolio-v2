@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import type { SVGProps } from 'react'
 import { Database } from 'lucide-react'
-import { TextAnimate } from './ui/text-animate'
 
 // Go Icon Component
 const GoIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -100,9 +99,6 @@ const springConfig = {
   damping: 20,
 }
 
-const TITLE_CHAR_DURATION = 0.03
-const TECH_PREFIX = 'The'
-const TECH_MAIN = 'Tech Stack'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -198,41 +194,8 @@ export default function TechStack() {
             transition={{ ...springConfig, delay: 0.2 }}
           >
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC]">
-              {(() => {
-                const baseDelay = 0.1
-                const prefixDuration = TECH_PREFIX.length * TITLE_CHAR_DURATION
-                const mainDuration = TECH_MAIN.length * TITLE_CHAR_DURATION
-                const mainDelay = baseDelay + prefixDuration
-
-                return (
-                  <>
-                    <TextAnimate
-                      animation="blurInUp"
-                      by="character"
-                      once
-                      startOnView={true}
-                      delay={baseDelay}
-                      duration={prefixDuration}
-                      as="span"
-                      className="inline"
-                    >
-                      {TECH_PREFIX}
-                    </TextAnimate>{' '}
-                    <TextAnimate
-                      animation="blurInUp"
-                      by="character"
-                      once
-                      startOnView={true}
-                      delay={mainDelay}
-                      duration={mainDuration}
-                      as="span"
-                      className="inline font-serif italic font-normal"
-                    >
-                      {TECH_MAIN}
-                    </TextAnimate>
-                  </>
-                )
-              })()}
+              The{' '}
+              <span className="font-serif italic font-normal">Tech Stack</span>
             </h2>
           </motion.div>
         </div>

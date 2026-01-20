@@ -7,17 +7,11 @@ import OtherActivities from '@/components/OtherActivities'
 import BentoGrid from '@/components/BentoGrid'
 import Footer from '@/components/Footer'
 import { motion } from 'framer-motion'
-import { TextAnimate } from '@/components/ui/text-animate'
-
 const springConfig = {
   type: 'spring' as const,
   stiffness: 300,
   damping: 20,
 }
-
-const TITLE_CHAR_DURATION = 0.03
-const ABOUT_PREFIX = 'Get to'
-const ABOUT_MAIN = 'Know Me'
 
 export default function Home() {
   return (
@@ -46,39 +40,8 @@ export default function Home() {
               transition={{ ...springConfig, delay: 0.2 }}
             >
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC]">
-                {(() => {
-                  const baseDelay = 0.15
-                  const prefixDuration = ABOUT_PREFIX.length * TITLE_CHAR_DURATION
-                  const mainDuration = ABOUT_MAIN.length * TITLE_CHAR_DURATION
-                  const mainDelay = baseDelay + prefixDuration
-
-                  return (
-                    <>
-                      <TextAnimate
-                        animation="blurInUp"
-                        by="character"
-                        once
-                        delay={baseDelay}
-                        duration={prefixDuration}
-                        as="span"
-                        className="inline"
-                      >
-                        {ABOUT_PREFIX}
-                      </TextAnimate>{' '}
-                      <TextAnimate
-                        animation="blurInUp"
-                        by="character"
-                        once
-                        delay={mainDelay}
-                        duration={mainDuration}
-                        as="span"
-                        className="inline font-serif italic font-normal"
-                      >
-                        {ABOUT_MAIN}
-                      </TextAnimate>
-                    </>
-                  )
-                })()}
+                Get to{' '}
+                <span className="font-serif italic font-normal">Know Me</span>
               </h2>
             </motion.div>
           </div>

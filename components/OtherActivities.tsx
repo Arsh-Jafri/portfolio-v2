@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { TextAnimate } from './ui/text-animate'
 
 const springConfig = {
   type: 'spring' as const,
@@ -10,9 +9,6 @@ const springConfig = {
   damping: 20,
 }
 
-const TITLE_CHAR_DURATION = 0.03
-const ACTIVITIES_PREFIX = 'Beyond the'
-const ACTIVITIES_MAIN = 'IDE'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -120,41 +116,8 @@ export default function OtherActivities() {
           transition={{ ...springConfig, delay: 0.2 }}
         >
           <h2>
-            {(() => {
-              const baseDelay = 0.1
-              const prefixDuration = ACTIVITIES_PREFIX.length * TITLE_CHAR_DURATION
-              const mainDuration = ACTIVITIES_MAIN.length * TITLE_CHAR_DURATION
-              const mainDelay = baseDelay + prefixDuration
-
-              return (
-                <>
-                  <TextAnimate
-                    animation="blurInUp"
-                    by="character"
-                    once
-                    startOnView={true}
-                    delay={baseDelay}
-                    duration={prefixDuration}
-                    as="span"
-                    className="inline"
-                  >
-                    {ACTIVITIES_PREFIX}
-                  </TextAnimate>{' '}
-                  <TextAnimate
-                    animation="blurInUp"
-                    by="character"
-                    once
-                    startOnView={true}
-                    delay={mainDelay}
-                    duration={mainDuration}
-                    as="span"
-                    className="inline font-serif italic font-normal"
-                  >
-                    {ACTIVITIES_MAIN}
-                  </TextAnimate>
-                </>
-              )
-            })()}
+            Beyond the{' '}
+            <span className="font-serif italic font-normal">IDE</span>
           </h2>
         </motion.div>
 
