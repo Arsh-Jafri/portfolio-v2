@@ -83,11 +83,11 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ ...springConfig, delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12"
         >
           {/* Email Card - Large */}
           <SpotlightCard 
-            className="custom-spotlight-card col-span-2 md:col-span-2 min-h-[140px] md:min-h-[160px] group cursor-pointer" 
+            className="custom-spotlight-card sm:col-span-2 md:col-span-2 min-h-[140px] md:min-h-[160px] group cursor-pointer" 
             spotlightColor="rgba(255, 255, 255, 0.08)"
           >
             <a 
@@ -157,7 +157,7 @@ export default function Footer() {
 
           {/* Resume Card - Full width */}
           <SpotlightCard 
-            className="custom-spotlight-card col-span-2 md:col-span-4 min-h-[100px] md:min-h-[100px] group cursor-pointer" 
+            className="custom-spotlight-card sm:col-span-2 md:col-span-4 min-h-[100px] md:min-h-[100px] group cursor-pointer" 
             spotlightColor="rgba(255, 255, 255, 0.08)"
           >
             <a 

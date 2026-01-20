@@ -210,6 +210,7 @@ export default function TechStack() {
                       animation="blurInUp"
                       by="character"
                       once
+                      startOnView={false}
                       delay={baseDelay}
                       duration={prefixDuration}
                       as="span"
@@ -221,6 +222,7 @@ export default function TechStack() {
                       animation="blurInUp"
                       by="character"
                       once
+                      startOnView={false}
                       delay={mainDelay}
                       duration={mainDuration}
                       as="span"
