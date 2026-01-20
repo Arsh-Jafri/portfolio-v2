@@ -128,8 +128,7 @@ export function Map({
         map.current = null;
         
         // Check if map is in a valid state before removing
-        // @ts-expect-error - accessing internal property to check state
-        if (mapToRemove._removed) return;
+        if ((mapToRemove as unknown as { _removed?: boolean })._removed) return;
         
         // Cancel any pending requests before removal
         try {
@@ -142,8 +141,7 @@ export function Map({
         setTimeout(() => {
           try {
             // Double-check map hasn't been removed
-            // @ts-expect-error - accessing internal property to check state
-            if (!mapToRemove._removed) {
+            if (!(mapToRemove as unknown as { _removed?: boolean })._removed) {
               mapToRemove.remove();
             }
           } catch {
