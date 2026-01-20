@@ -83,7 +83,7 @@ const projects = [
   {
     id: 5,
     title: 'PlateMate',
-    description: 'A dish and restaurant recommendation app. That uses user taste, portion, and price preferences to provide hyper-personalized recommendations via an embedding-based algorithm.',
+    description: 'A dish and restaurant recommendation app that uses taste, portion, and price preferences to provide hyper-personalized recommendations via an embedding-based algorithm.',
     tags: ['Python', 'Go', 'React Native', 'Recommender Systems', 'MongoDB'],
     buttons: [
       { type: 'download', url: '#', icon: 'apple' },
