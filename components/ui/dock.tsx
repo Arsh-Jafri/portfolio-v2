@@ -67,6 +67,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
 
     const currentMagnification = isMobile ? iconMagnificationMobile : iconMagnification
     const currentDistance = isMobile ? iconDistanceMobile : iconDistance
+    const currentDisableMagnification = isMobile ? true : disableMagnification
 
     const renderChildren = () => {
       return React.Children.map(children, (child) => {
@@ -79,7 +80,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
             mouseX: mouseX,
             size: iconSize,
             magnification: currentMagnification,
-            disableMagnification: disableMagnification,
+            disableMagnification: currentDisableMagnification,
             distance: currentDistance,
           })
         }
