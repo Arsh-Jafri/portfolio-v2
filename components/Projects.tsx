@@ -4,12 +4,17 @@ import { motion } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 import { Github, ExternalLink, Download } from 'lucide-react'
 import { SiGooglechrome } from 'react-icons/si'
+import { TextAnimate } from './ui/text-animate'
 
 const springConfig = {
   type: 'spring' as const,
   stiffness: 300,
   damping: 20,
 }
+
+const TITLE_CHAR_DURATION = 0.03
+const PROJECTS_PREFIX = 'My'
+const PROJECTS_MAIN = 'Projects'
 
 // Project data matching the design
 const projects = [
@@ -155,7 +160,39 @@ export default function Projects() {
           transition={{ ...springConfig, delay: 0.2 }}
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC]">
-            My <span className="font-serif italic font-normal">Projects</span>
+            {(() => {
+              const baseDelay = 0.1
+              const prefixDuration = PROJECTS_PREFIX.length * TITLE_CHAR_DURATION
+              const mainDuration = PROJECTS_MAIN.length * TITLE_CHAR_DURATION
+              const mainDelay = baseDelay + prefixDuration
+
+              return (
+                <>
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={baseDelay}
+                    duration={prefixDuration}
+                    as="span"
+                    className="inline"
+                  >
+                    {PROJECTS_PREFIX}
+                  </TextAnimate>{' '}
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={mainDelay}
+                    duration={mainDuration}
+                    as="span"
+                    className="inline font-serif italic font-normal"
+                  >
+                    {PROJECTS_MAIN}
+                  </TextAnimate>
+                </>
+              )
+            })()}
           </h2>
           <motion.a
             href="https://github.com/arsh-jafri"

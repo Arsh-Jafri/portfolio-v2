@@ -151,12 +151,12 @@ const BOSTON_COORDINATES: [number, number] = [-71.0589, 42.3601];
 // Interests to cycle through
 const interests = [
   { text: 'Working out', icon: Dumbbell },
-  { text: 'Reading AI research', icon: BookOpen },
+  { text: 'Reading research', icon: BookOpen },
   { text: 'Graphic design', icon: Palette },
-  { text: 'Playing ping-pong', icon: CircleDotDashed },
+  { text: 'Ping-pong', icon: CircleDotDashed },
   { text: 'Eating pho', icon: Utensils },
   { text: 'Rewatching movies', icon: Film },
-  { text: 'Listening to Drake', icon: Music },
+  { text: 'Listening to music', icon: Music },
 ];
 
 const experiences = [

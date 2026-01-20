@@ -1,6 +1,6 @@
 "use client"
 
-import React, { PropsWithChildren, useRef } from "react"
+import React, { PropsWithChildren, useRef, useEffect, useState } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import {
   motion,
@@ -17,15 +17,19 @@ export interface DockProps extends VariantProps<typeof dockVariants> {
   className?: string
   iconSize?: number
   iconMagnification?: number
+  iconMagnificationMobile?: number
   disableMagnification?: boolean
   iconDistance?: number
+  iconDistanceMobile?: number
   direction?: "top" | "middle" | "bottom"
   children: React.ReactNode
 }
 
 const DEFAULT_SIZE = 40
 const DEFAULT_MAGNIFICATION = 60
+const DEFAULT_MAGNIFICATION_MOBILE = 80
 const DEFAULT_DISTANCE = 140
+const DEFAULT_DISTANCE_MOBILE = 100
 const DEFAULT_DISABLEMAGNIFICATION = false
 
 const dockVariants = cva(
@@ -39,14 +43,30 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       children,
       iconSize = DEFAULT_SIZE,
       iconMagnification = DEFAULT_MAGNIFICATION,
+      iconMagnificationMobile = DEFAULT_MAGNIFICATION_MOBILE,
       disableMagnification = DEFAULT_DISABLEMAGNIFICATION,
       iconDistance = DEFAULT_DISTANCE,
+      iconDistanceMobile = DEFAULT_DISTANCE_MOBILE,
       direction = "middle",
       ...props
     },
     ref
   ) => {
     const mouseX = useMotionValue(Infinity)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+      if (typeof window === "undefined") return
+      const checkMobile = () => {
+        setIsMobile(window.matchMedia("(max-width: 639px)").matches)
+      }
+      checkMobile()
+      window.addEventListener("resize", checkMobile)
+      return () => window.removeEventListener("resize", checkMobile)
+    }, [])
+
+    const currentMagnification = isMobile ? iconMagnificationMobile : iconMagnification
+    const currentDistance = isMobile ? iconDistanceMobile : iconDistance
 
     const renderChildren = () => {
       return React.Children.map(children, (child) => {
@@ -58,9 +78,9 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
             ...child.props,
             mouseX: mouseX,
             size: iconSize,
-            magnification: iconMagnification,
+            magnification: currentMagnification,
             disableMagnification: disableMagnification,
-            distance: iconDistance,
+            distance: currentDistance,
           })
         }
         return child
@@ -71,17 +91,19 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       <motion.div
         ref={ref}
         onMouseMove={(e) => {
-          // Only respond to actual mouse pointers (desktop/laptop), ignore touch/pencil
-          if (
-            typeof window !== "undefined" &&
-            window.matchMedia &&
-            window.matchMedia("(pointer: fine)").matches
-          ) {
-            mouseX.set(e.pageX)
-          }
+          mouseX.set(e.pageX)
         }}
         onMouseLeave={() => mouseX.set(Infinity)}
-        onTouchStart={() => mouseX.set(Infinity)}
+        onTouchStart={(e) => {
+          if (e.touches.length > 0) {
+            mouseX.set(e.touches[0].pageX)
+          }
+        }}
+        onTouchMove={(e) => {
+          if (e.touches.length > 0) {
+            mouseX.set(e.touches[0].pageX)
+          }
+        }}
         onTouchEnd={() => mouseX.set(Infinity)}
         onTouchCancel={() => mouseX.set(Infinity)}
         {...props}

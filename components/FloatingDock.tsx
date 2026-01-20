@@ -37,13 +37,6 @@ export default function FloatingDock() {
     setMounted(true)
   }, [])
 
-  // On mobile, skip entrance animation and go straight to visibility logic
-  useEffect(() => {
-    if (mounted && isMobile && !hasAnimated) {
-      setHasAnimated(true)
-    }
-  }, [mounted, isMobile, hasAnimated])
-
   useEffect(() => {
     if (typeof window === 'undefined') return
 
@@ -127,18 +120,18 @@ export default function FloatingDock() {
 
   const hideOnMobileHero = isMobile && activeSection === 'hero' && !isFooterVisible
 
-  // Determine the current y position based on visibility states
+  // Determine the current y position based on visibility states (slide only, no fade)
   const getAnimateState = () => {
-    if (!isMobile && !hasAnimated) {
-      return "visible" // Initial entrance animation on desktop
+    if (!hasAnimated) {
+      return "visible" // Initial entrance animation
     }
     if (isFooterVisible) {
-      return { y: 200, opacity: 1 } // Hide below when footer visible
+      return { y: 150 } // Slide below when footer visible
     }
     if (hideOnMobileHero) {
-      return { y: 16, opacity: 0 } // Hide on mobile hero
+      return { y: 150 } // Slide below on mobile hero
     }
-    return { y: 0, opacity: 1 } // Normal visible state
+    return { y: 0 } // Normal visible state
   }
 
   return (
@@ -148,8 +141,8 @@ export default function FloatingDock() {
         (isFooterVisible || hideOnMobileHero) && "pointer-events-none"
       )}
       style={{ x: "-50%" }}
-      variants={!isMobile ? dockVariants : undefined}
-      initial={!isMobile ? "hidden" : { y: hideOnMobileHero ? 16 : 0, opacity: hideOnMobileHero ? 0 : 1 }}
+      variants={dockVariants}
+      initial="hidden"
       animate={getAnimateState()}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       onAnimationComplete={() => setHasAnimated(true)}
@@ -158,7 +151,9 @@ export default function FloatingDock() {
         className="pointer-events-auto bg-[#0B0C10]/20 backdrop-blur-xl border-[#30363D]/50 shadow-none sm:shadow-2xl"
         iconSize={56}
         iconMagnification={80}
+        iconMagnificationMobile={90}
         iconDistance={180}
+        iconDistanceMobile={80}
       >
         <DockIcon 
           onClick={() => scrollToSection('hero')}

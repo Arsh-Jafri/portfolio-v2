@@ -1,14 +1,19 @@
-'use client'
+`use client`
 
 import { motion } from 'framer-motion'
 import { Linkedin, Mail, FileText, Github, ArrowUpRight, ArrowUp } from 'lucide-react'
 import SpotlightCard from './SpotlightCard'
+import { TextAnimate } from './ui/text-animate'
 
 const springConfig = {
   type: 'spring' as const,
   stiffness: 300,
   damping: 20,
 }
+
+const TITLE_CHAR_DURATION = 0.03
+const FOOTER_PREFIX = "Let's"
+const FOOTER_MAIN = 'Connect'
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -36,7 +41,39 @@ export default function Footer() {
             Get in touch
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC]">
-            Let&apos;s <span className="font-serif italic font-normal">Connect</span>
+            {(() => {
+              const baseDelay = 0.1
+              const prefixDuration = FOOTER_PREFIX.length * TITLE_CHAR_DURATION
+              const mainDuration = FOOTER_MAIN.length * TITLE_CHAR_DURATION
+              const mainDelay = baseDelay + prefixDuration
+
+              return (
+                <>
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={baseDelay}
+                    duration={prefixDuration}
+                    as="span"
+                    className="inline"
+                  >
+                    {FOOTER_PREFIX}
+                  </TextAnimate>{' '}
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={mainDelay}
+                    duration={mainDuration}
+                    as="span"
+                    className="inline font-serif italic font-normal"
+                  >
+                    {FOOTER_MAIN}
+                  </TextAnimate>
+                </>
+              )
+            })()}
           </h2>
         </motion.div>
 

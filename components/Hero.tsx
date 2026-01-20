@@ -4,12 +4,18 @@ import { motion } from 'framer-motion'
 import { Linkedin, Github, Mail, FileText } from 'lucide-react'
 import { useRef } from 'react'
 import ColorBends from './ColorBends'
+import { TextAnimate } from './ui/text-animate'
 
 const springConfig = {
   type: 'spring' as const,
   stiffness: 300,
   damping: 20,
 }
+
+const TITLE_CHAR_DURATION = 0.03
+const HERO_LINE1 = "Hey there,"
+const HERO_IM = "I'm"
+const HERO_NAME = "Arsh Jafri"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,12 +109,65 @@ export default function Hero() {
           animate="visible"
         >
           {/* Main Heading */}
-          <motion.h1
+          <motion.div
             className="text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-[#F0F6FC] leading-tight tracking-tight"
             variants={itemVariants}
           >
-            Hey there, <br />I&apos;m <span className="font-serif italic font-normal">Arsh Jafri</span>
-          </motion.h1>
+            {/** compute per-segment durations from character counts */}
+            {(() => {
+              const baseDelay = 0.15
+              const line1Duration = HERO_LINE1.length * TITLE_CHAR_DURATION
+              const imDuration = HERO_IM.length * TITLE_CHAR_DURATION
+              const nameDuration = HERO_NAME.length * TITLE_CHAR_DURATION
+
+              const imDelay = baseDelay + line1Duration
+              const nameDelay = imDelay + imDuration
+
+              return (
+                <>
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    startOnView={false}
+                    as="h1"
+                    delay={baseDelay}
+                    duration={line1Duration}
+                    className="inline"
+                  >
+                    {HERO_LINE1}
+                  </TextAnimate>
+                  <br />
+                  <span className="whitespace-nowrap">
+                    <TextAnimate
+                      animation="blurInUp"
+                      by="character"
+                      once
+                      startOnView={false}
+                      as="span"
+                      delay={imDelay}
+                      duration={imDuration}
+                      className="inline"
+                    >
+                      {HERO_IM}
+                    </TextAnimate>{' '}
+                    <TextAnimate
+                      animation="blurInUp"
+                      by="character"
+                      once
+                      startOnView={false}
+                      as="span"
+                      delay={nameDelay}
+                      duration={nameDuration}
+                      className="inline font-serif italic font-normal"
+                    >
+                      {HERO_NAME}
+                    </TextAnimate>
+                  </span>
+                </>
+              )
+            })()}
+          </motion.div>
 
           {/* Metadata Lines */}
           <motion.div

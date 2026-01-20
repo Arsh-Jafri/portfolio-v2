@@ -2,12 +2,17 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { TextAnimate } from './ui/text-animate'
 
 const springConfig = {
   type: 'spring' as const,
   stiffness: 300,
   damping: 20,
 }
+
+const TITLE_CHAR_DURATION = 0.03
+const ACTIVITIES_PREFIX = 'Beyond the'
+const ACTIVITIES_MAIN = 'IDE'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -107,15 +112,49 @@ export default function OtherActivities() {
           </p>
         </motion.div>
 
-        <motion.h2
+        <motion.div
           className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC] mb-10 md:mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-150px' }}
           transition={{ ...springConfig, delay: 0.2 }}
         >
-          Beyond the <span className="font-serif italic font-normal">IDE</span>
-        </motion.h2>
+          <h2>
+            {(() => {
+              const baseDelay = 0.1
+              const prefixDuration = ACTIVITIES_PREFIX.length * TITLE_CHAR_DURATION
+              const mainDuration = ACTIVITIES_MAIN.length * TITLE_CHAR_DURATION
+              const mainDelay = baseDelay + prefixDuration
+
+              return (
+                <>
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={baseDelay}
+                    duration={prefixDuration}
+                    as="span"
+                    className="inline"
+                  >
+                    {ACTIVITIES_PREFIX}
+                  </TextAnimate>{' '}
+                  <TextAnimate
+                    animation="blurInUp"
+                    by="character"
+                    once
+                    delay={mainDelay}
+                    duration={mainDuration}
+                    as="span"
+                    className="inline font-serif italic font-normal"
+                  >
+                    {ACTIVITIES_MAIN}
+                  </TextAnimate>
+                </>
+              )
+            })()}
+          </h2>
+        </motion.div>
 
         <motion.div
           className="flex flex-col gap-4 md:gap-6"
