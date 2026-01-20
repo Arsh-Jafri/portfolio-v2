@@ -120,6 +120,12 @@ export default function FloatingDock() {
 
   const hideOnMobileHero = isMobile && activeSection === 'hero' && !isFooterVisible
 
+  // On mobile in the hero section, completely hide the dock so it doesn't
+  // briefly slide up and then back down during the initial hero animation.
+  if (hideOnMobileHero) {
+    return null
+  }
+
   // Determine the current y position based on visibility states (slide only, no fade)
   const getAnimateState = () => {
     if (!hasAnimated) {
@@ -127,9 +133,6 @@ export default function FloatingDock() {
     }
     if (isFooterVisible) {
       return { y: 150 } // Slide below when footer visible
-    }
-    if (hideOnMobileHero) {
-      return { y: 150 } // Slide below on mobile hero
     }
     return { y: 0 } // Normal visible state
   }
