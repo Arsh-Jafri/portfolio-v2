@@ -101,14 +101,15 @@ export default function FloatingDock() {
 
   const hideOnMobileHero = isMobile && activeSection === 'hero' && !isFooterVisible
 
+  const translateYClass =
+    isFooterVisible || hideOnMobileHero ? "translate-y-[200px]" : "translate-y-0"
+
   return (
     <div
       className={cn(
         "fixed bottom-1 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
-        isFooterVisible ? "translate-y-[200px] pointer-events-none" : "translate-y-0",
-        hideOnMobileHero
-          ? "opacity-0 translate-y-4 pointer-events-none"
-          : "opacity-100 translate-y-0"
+        translateYClass,
+        hideOnMobileHero ? "opacity-0 pointer-events-none" : "opacity-100"
       )}
     >
       <Dock 
