@@ -54,7 +54,7 @@ const projects = [
     id: 3,
     title: 'Tripful',
     description: 'An AI-powered travel planner that uses live data (Google Places and Amadeus APIs) to generate personalized itineraries from user preferences.',
-    tags: ['iOS', 'SwiftUI', 'Swift', 'CoinGecko API', 'REST API'],
+    tags: ['REST APIs', 'Node.js', 'TypeScript', 'LLM Orchestration'],
     githubUrl: 'https://github.com/arsh-jafri/tripful',
     buttons: [
       { type: 'github', url: 'https://github.com/arsh-jafri/tripful' },
@@ -172,6 +172,7 @@ export default function Projects() {
                     animation="blurInUp"
                     by="character"
                     once
+                    startOnView={true}
                     delay={baseDelay}
                     duration={prefixDuration}
                     as="span"
@@ -183,6 +184,7 @@ export default function Projects() {
                     animation="blurInUp"
                     by="character"
                     once
+                    startOnView={true}
                     delay={mainDelay}
                     duration={mainDuration}
                     as="span"

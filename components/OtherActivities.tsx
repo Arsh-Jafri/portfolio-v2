@@ -132,6 +132,7 @@ export default function OtherActivities() {
                     animation="blurInUp"
                     by="character"
                     once
+                    startOnView={true}
                     delay={baseDelay}
                     duration={prefixDuration}
                     as="span"
@@ -143,6 +144,7 @@ export default function OtherActivities() {
                     animation="blurInUp"
                     by="character"
                     once
+                    startOnView={true}
                     delay={mainDelay}
                     duration={mainDuration}
                     as="span"
