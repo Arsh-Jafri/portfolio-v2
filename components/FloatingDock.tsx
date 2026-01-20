@@ -79,10 +79,12 @@ export default function FloatingDock() {
   }
 
   return (
-    <div className={cn(
-      "fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
-      isFooterVisible ? "translate-y-[200px] pointer-events-none" : "translate-y-0"
-    )}>
+    <div
+      className={cn(
+        "fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
+        isFooterVisible ? "translate-y-[200px] pointer-events-none" : "translate-y-0"
+      )}
+    >
       <Dock 
         className="pointer-events-auto bg-[#0B0C10]/20 backdrop-blur-xl border-[#30363D]/50 shadow-2xl"
         iconSize={56}

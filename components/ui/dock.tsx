@@ -29,7 +29,7 @@ const DEFAULT_DISTANCE = 140
 const DEFAULT_DISABLEMAGNIFICATION = false
 
 const dockVariants = cva(
-  "mx-auto flex h-[80px] w-max items-center justify-center gap-3 rounded-3xl border p-3 backdrop-blur-xl overflow-hidden"
+  "mx-auto flex h-[80px] w-max items-center justify-center gap-2 sm:gap-3 rounded-3xl border p-2 sm:p-3 backdrop-blur-xl overflow-hidden"
 )
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -70,8 +70,20 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     return (
       <motion.div
         ref={ref}
-        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseMove={(e) => {
+          // Only respond to actual mouse pointers (desktop/laptop), ignore touch/pencil
+          if (
+            typeof window !== "undefined" &&
+            window.matchMedia &&
+            window.matchMedia("(pointer: fine)").matches
+          ) {
+            mouseX.set(e.pageX)
+          }
+        }}
         onMouseLeave={() => mouseX.set(Infinity)}
+        onTouchStart={() => mouseX.set(Infinity)}
+        onTouchEnd={() => mouseX.set(Infinity)}
+        onTouchCancel={() => mouseX.set(Infinity)}
         {...props}
         className={cn(dockVariants({ className }), {
           "items-start": direction === "top",
