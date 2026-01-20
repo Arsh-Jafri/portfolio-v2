@@ -143,7 +143,7 @@ export default function Projects() {
           transition={{ ...springConfig, delay: 0.1 }}
         >
           <p className="text-sm uppercase tracking-wider text-[#8B949E] mb-2">
-            What I've built
+            What I&apos;ve built
           </p>
         </motion.div>
         

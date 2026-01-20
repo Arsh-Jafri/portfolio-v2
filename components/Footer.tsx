@@ -36,7 +36,7 @@ export default function Footer() {
             Get in touch
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#F0F6FC]">
-            Let's <span className="font-serif italic font-normal">Connect</span>
+            Let&apos;s <span className="font-serif italic font-normal">Connect</span>
           </h2>
         </motion.div>
 

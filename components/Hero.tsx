@@ -107,7 +107,7 @@ export default function Hero() {
             className="text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-[#F0F6FC] leading-tight tracking-tight"
             variants={itemVariants}
           >
-            Hey there, <br />I'm <span className="font-serif italic font-normal">Arsh Jafri</span>
+            Hey there, <br />I&apos;m <span className="font-serif italic font-normal">Arsh Jafri</span>
           </motion.h1>
 
           {/* Metadata Lines */}
