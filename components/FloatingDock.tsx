@@ -1,11 +1,29 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Home, User, Folder, CodeXml, Cross } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Dock, DockIcon } from './ui/dock'
 
 const sections = ['hero', 'about', 'projects', 'tech', 'activities']
+
+const springConfig = {
+  type: 'spring' as const,
+  stiffness: 300,
+  damping: 20,
+}
+
+const dockVariants = {
+  hidden: { y: 150 }, // Start below the viewport
+  visible: {
+    y: 0,
+    transition: {
+      ...springConfig,
+      delay: 0.15, // Quick delay after mount
+    },
+  },
+}
 
 export default function FloatingDock() {
   const [mounted, setMounted] = useState(false)
@@ -13,10 +31,18 @@ export default function FloatingDock() {
   const [isScrolling, setIsScrolling] = useState(false)
   const [isFooterVisible, setIsFooterVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // On mobile, skip entrance animation and go straight to visibility logic
+  useEffect(() => {
+    if (mounted && isMobile && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [mounted, isMobile, hasAnimated])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -101,16 +127,32 @@ export default function FloatingDock() {
 
   const hideOnMobileHero = isMobile && activeSection === 'hero' && !isFooterVisible
 
-  const translateYClass =
-    isFooterVisible || hideOnMobileHero ? "translate-y-[200px]" : "translate-y-0"
+  // Determine the current y position based on visibility states
+  const getAnimateState = () => {
+    if (!isMobile && !hasAnimated) {
+      return "visible" // Initial entrance animation on desktop
+    }
+    if (isFooterVisible) {
+      return { y: 200, opacity: 1 } // Hide below when footer visible
+    }
+    if (hideOnMobileHero) {
+      return { y: 16, opacity: 0 } // Hide on mobile hero
+    }
+    return { y: 0, opacity: 1 } // Normal visible state
+  }
 
   return (
-    <div
+    <motion.div
       className={cn(
-        "fixed bottom-1 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-transform duration-300 ease-in-out",
-        translateYClass,
-        hideOnMobileHero ? "opacity-0 pointer-events-none" : "opacity-100"
+        "fixed bottom-1 sm:bottom-8 left-1/2 z-50 pointer-events-none",
+        (isFooterVisible || hideOnMobileHero) && "pointer-events-none"
       )}
+      style={{ x: "-50%" }}
+      variants={!isMobile ? dockVariants : undefined}
+      initial={!isMobile ? "hidden" : { y: hideOnMobileHero ? 16 : 0, opacity: hideOnMobileHero ? 0 : 1 }}
+      animate={getAnimateState()}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      onAnimationComplete={() => setHasAnimated(true)}
     >
       <Dock 
         className="pointer-events-auto bg-[#0B0C10]/20 backdrop-blur-xl border-[#30363D]/50 shadow-none sm:shadow-2xl"
@@ -164,7 +206,7 @@ export default function FloatingDock() {
           )} />
         </DockIcon>
       </Dock>
-    </div>
+    </motion.div>
   )
 }
 

@@ -129,11 +129,6 @@ const DockIcon = ({
   const padding = Math.max(6, size * 0.2)
   const defaultMouseX = useMotionValue(Infinity)
 
-  const isFinePointer =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(pointer: fine)").matches
-
   const distanceCalc = useTransform(mouseX ?? defaultMouseX, (val: number) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
     return val - bounds.x - bounds.width / 2
@@ -153,13 +148,11 @@ const DockIcon = ({
     damping: 12,
   })
 
-  const tapAnimation = isFinePointer ? undefined : { scale: 1.18 }
-
   return (
     <motion.div
       ref={ref}
       style={{ width: scaleSize, height: scaleSize, padding }}
-      whileTap={tapAnimation}
+      whileTap={{ scale: 1.08 }}
       className={cn(
         "flex aspect-square cursor-pointer items-center justify-center rounded-full transition-all",
         isActive ? "bg-accent pill-button" : "bg-transparent hover:bg-white/10",
