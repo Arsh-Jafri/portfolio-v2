@@ -83,7 +83,7 @@ const projects = [
   {
     id: 5,
     title: 'PlateMate',
-    description: 'A mobile application for meal planning and nutrition tracking. Helps users plan meals, track calories, and maintain a healthy diet.',
+    description: 'A dish and restaurant recommendation app. That uses user taste, portion, and price preferences to provide hyper-personalized recommendations via an embedding-based algorithm.',
     tags: ['Python', 'Go', 'React Native', 'Recommender Systems', 'MongoDB'],
     buttons: [
       { type: 'download', url: '#', icon: 'apple' },
