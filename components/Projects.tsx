@@ -59,11 +59,11 @@ const projects = [
   {
     id: 6,
     title: 'Nexcap',
-    description: 'Developed and pitched a crowdfunding app that allows retail investors access to private securities. Secured $1.5k in seed funding. ',
+    description: 'Prototyped and pitched a crowdfunding app that allows retail investors access to private securities. Secured $1.5k in seed funding. ',
     tags: ['Fintech', 'React', 'TypeScript', 'Web3', 'Blockchain'],
     buttons: [
-      { type: 'pitchdeck', url: '/Nexcap-Pitch' },
-      { type: 'readmore', url: '/Nexcap-One-Pager' },
+      { type: 'pitchdeck', url: '/Nexcap-Pitch.pdf' },
+      { type: 'readmore', url: '/Nexcap-One-Pager.pdf' },
     ],
   },
   {
@@ -307,8 +307,8 @@ export default function Projects() {
                             whileTap={{ scale: 0.98 }}
                             transition={springConfig}
                           >
-                            {isFirstButton && <SiGooglechrome className="w-3.5 h-3.5 md:w-4 md:h-4" />}
-                            Install
+                            <SiGooglechrome className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                            Add to Chrome
                           </motion.a>
                         )
                       }
