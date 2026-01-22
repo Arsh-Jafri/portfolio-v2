@@ -151,9 +151,18 @@ export default function Footer() {
           transition={{ ...springConfig, delay: 0.2 }}
           className="text-center pt-6 md:pt-8 border-t border-[#30363D]/50"
         >
-          <p className="text-xs md:text-sm text-[#8B949E] font-light">
+          <p className="text-xs md:text-sm text-[#8B949E] font-light mb-2">
             © {new Date().getFullYear()} Arsh Jafri. All rights reserved.
           </p>
+          <a
+            href="https://github.com/arsh-jafri/portfolio-v2"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs md:text-sm text-[#8B949E] hover:text-[#F0F6FC] transition-colors font-light group"
+          >
+            <span>Check out the code for this site</span>
+            <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
         </motion.div>
 
         {/* Back to Top Button */}
